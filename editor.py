@@ -3,7 +3,6 @@ import sys
 import json
 from tilemap import *
 
-
 class Editor:
     def __init__(self,win):
         self.__win = win
