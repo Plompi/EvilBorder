@@ -64,7 +64,7 @@ class Editor:
                     else:
                         break
                     try:
-                        with open('levels.json', 'r') as f:
+                        with open('assets/levels/levels.json', 'r') as f:
                             self.__welt = json.load(f)[self.__worldindex+self.__direction]
 
                         self.__map1 = Tilemap(self.__welt,self.__win)
@@ -75,10 +75,10 @@ class Editor:
 
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_BACKSPACE and self.__worldindex >= -1:
                     try:
-                        with open("levels.json",'r') as level:
+                        with open("assets/levels/levels.json",'r') as level:
                             self.__file_data = json.load(level)
                         self.__file_data.pop(self.__worldindex)
-                        with open("levels.json",'w') as level:
+                        with open("assets/levels/levels.json",'w') as level:
                             json.dump(self.__file_data, level)
                     except:
                         self.__worldindex = -1
@@ -87,7 +87,7 @@ class Editor:
                         self.__worldindex -=1
 
                     try:
-                        with open('levels.json', 'r') as f:
+                        with open('assets/levels/levels.json', 'r') as f:
                             self.__welt = json.load(f)[self.__worldindex]
 
                         self.__map1 = Tilemap(self.__welt,self.__win)
@@ -100,10 +100,10 @@ class Editor:
                 if self.__worldindex == -1:
 
                     if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
-                        with open("levels.json",'r') as level:
+                        with open("assets/levels/levels.json",'r') as level:
                             self.__file_data = json.load(level)
                         self.__file_data.append(self.__map)
-                        with open("levels.json",'w') as level:
+                        with open("assets/levels/levels.json",'w') as level:
                             json.dump(self.__file_data, level)
                         return
 
