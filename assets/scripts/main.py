@@ -14,7 +14,7 @@ class Main:
         self.__clock = pygame.time.Clock()
         self.__timer = Timer(self.__win)
 
-        with open('levels.json', 'r') as f:
+        with open('assets/levels/levels.json', 'r') as f:
             self.__welt = json.load(f)[0]
 
         self.__map = Tilemap(self.__welt,self.__win)
@@ -72,7 +72,7 @@ class Main:
                     if self.__player.getRect().colliderect(j.getRect()):
                         self.__player.setlevel()
                         try:
-                            with open('levels.json', 'r') as f:
+                            with open('assets/levels/levels.json', 'r') as f:
                                 self.__welt = json.load(f)[self.__player.getlevel()]
                             self.__map = Tilemap(self.__welt,self.__win)
                             self.__tilemap = self.__map.getMap()
