@@ -1,1 +1,1 @@
-<img src="https://github.com/Plompi/EvilWall/blob/main/assets/img/EvilWall.png">
+<img src="https://github.com/Plompi/EvilWall/blob/master/assets/img/EvilWall.png">
