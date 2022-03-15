@@ -7,17 +7,14 @@ from editor import *
 class Menu:
     def __init__(self):
         pygame.init()
-        pygame.display.set_caption('Evil Border')
-        self.__standardcursor = pygame.mouse.get_cursor()
+        pygame.display.set_caption('Evil Wall')
         self.__win = pygame.display.set_mode((700,700))
         self.__clock = pygame.time.Clock()
         self.__selected = 1
-        self.__buttons = [
-            Button('EVIL BORDER',100,(self.__win.get_width()/2,self.__win.get_height()/2-300),self.__win,1),
-            Button('PLAY',100,(self.__win.get_width()/2,self.__win.get_height()/2-80),self.__win,-1),
-            Button('EDITOR',100,(self.__win.get_width()/2,self.__win.get_height()/2),self.__win,1),
-            Button('QUIT',100,(self.__win.get_width()/2,self.__win.get_height()/2+80),self.__win,1)
-        ]
+        self.__buttons = [  Button('EVIL WALL',100,(self.__win.get_width()/2,self.__win.get_height()/2-300),self.__win,1),
+                            Button('PLAY',100,(self.__win.get_width()/2,self.__win.get_height()/2-80),self.__win,-1),
+                            Button('EDITOR',100,(self.__win.get_width()/2,self.__win.get_height()/2),self.__win,1),
+                            Button('QUIT',100,(self.__win.get_width()/2,self.__win.get_height()/2+80),self.__win,1)]
 
     def start(self):
         while True:
@@ -37,11 +34,9 @@ class Menu:
                                 self.__buttons[self.__selected].setSelected()
                                 self.__selected +=1
 
-
-
                     if event.key == pygame.K_RETURN:
                         if self.__selected == 1:
-                            Main(self.__win,self.__standardcursor).playerinput()
+                            Main(self.__win).playerinput()
 
                         if self.__selected == 2:
                             Editor(self.__win).createMap()

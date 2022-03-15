@@ -22,8 +22,8 @@ class Player:
         pygame.draw.rect(self.__win,"#44AF69",self.__player)
 
     def restart(self):
-        pygame.mouse.set_pos((self.__position[0] + self.__tilesize/2,self.__position[1] + self.__tilesize/2))
-        self.changePosition(pygame.mouse.get_pos())
+        self.__x, self.__y = self.__position[0] + self.__tilesize/2,self.__position[1] + self.__tilesize/2
+        pygame.mouse.set_pos((self.__x,self.__y))
 
     def getRect(self):
         return self.__player

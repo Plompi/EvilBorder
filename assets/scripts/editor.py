@@ -12,7 +12,7 @@ class Editor:
         self.__worldindex = -1
         self.__click = False
         self.__delete = False
-        self.__map = [
+        self.__map = [  ["w","w","w","w","w","w","w","w","w","w"],
                         ["w","w","w","w","w","w","w","w","w","w"],
                         ["w","w","w","w","w","w","w","w","w","w"],
                         ["w","w","w","w","w","w","w","w","w","w"],
@@ -21,10 +21,7 @@ class Editor:
                         ["w","w","w","w","w","w","w","w","w","w"],
                         ["w","w","w","w","w","w","w","w","w","w"],
                         ["w","w","w","w","w","w","w","w","w","w"],
-                        ["w","w","w","w","w","w","w","w","w","w"],
-                        ["w","w","w","w","w","w","w","w","w","w"]
-
-                    ]
+                        ["w","w","w","w","w","w","w","w","w","w"]]
 
     def createMap(self):
         while True:
@@ -54,7 +51,6 @@ class Editor:
 
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                     return
-
 
                 if event.type == pygame.KEYDOWN and (event.key == pygame.K_d or event.key == pygame.K_RIGHT or event.key == pygame.K_LEFT or event.key == pygame.K_a) and self.__worldindex >= -1:
                     if (event.key == pygame.K_d or event.key == pygame.K_RIGHT):
@@ -95,8 +91,6 @@ class Editor:
                     except:
                         break
 
-                    
-
                 if self.__worldindex == -1:
 
                     if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
@@ -123,11 +117,9 @@ class Editor:
                         if self.__index == len(self.__tiles):
                             self.__index = 0
 
-
             if self.__worldindex == -1:
                 self.__tile = (pygame.mouse.get_pos()[0]//70,pygame.mouse.get_pos()[1]//70)
                 self.__win.fill('#242933')
-
 
                 s = pygame.Surface((70,70)) 
                 s.set_alpha(40)                

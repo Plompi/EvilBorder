@@ -7,10 +7,8 @@ from timer import *
 from gameover import *
 
 class Main:
-    def __init__(self,win,standardcursor):
+    def __init__(self,win):
         self.__win = win
-        pygame.mouse.set_cursor((8,8),(0,0),(0,0,0,0,0,0,0,0),(0,0,0,0,0,0,0,0))
-        self.__standardcursor = standardcursor
         self.__clock = pygame.time.Clock()
         self.__timer = Timer(self.__win)
 
@@ -19,11 +17,8 @@ class Main:
 
         self.__map = Tilemap(self.__welt,self.__win)
         self.__tilemap = self.__map.getMap()
-        for numi,i in enumerate(self.__tilemap):
-            for numj,j in enumerate(i):
-                if j.getName() == 's':
-                    self.__playerstart = (numj,numi)
-                    self.__starttile = j
+        self.__starttile = self.__map.getStartTile()[0]
+        self.__playerstart = self.__map.getStartTile()[1]
         self.__player = Player(40,(self.__playerstart[0]*self.__map.getTilesize(),self.__playerstart[1]*self.__map.getTilesize()),self.__map.getTilesize(),self.__win)
 
 
@@ -36,14 +31,12 @@ class Main:
             self.__timer.draw()
             pygame.display.flip()
 
-
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
 
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-                    pygame.mouse.set_cursor(self.__standardcursor)
                     return
 
                 if event.type == pygame.MOUSEMOTION:
@@ -60,15 +53,14 @@ class Main:
     def check_map(self):
         for i in self.__tilemap:
             for j in i:
-                if j.getName() == 'w':
+                name = j.getName()
+                if name == 'w':
                     if self.__player.getRect().colliderect(j.getRect()):
                         if not self.__player.getRect().colliderect(self.__starttile.getRect()):
                             self.__player.setdeaths()
                         self.__player.restart()
                         
-                    
-
-                if j.getName() == 'e':
+                if name == 'e':
                     if self.__player.getRect().colliderect(j.getRect()):
                         self.__player.setlevel()
                         try:
