@@ -26,25 +26,6 @@ class Editor:
 
     def createMap(self):
         while True:
-            if self.__worldindex == -1:
-                if self.__click == True:
-                    if self.__map[self.__tile[1]][self.__tile[0]] == 'w' or (self.__map[self.__tile[1]][self.__tile[0]] == 'p' and self.__index != 0):
-                        self.__map[self.__tile[1]][self.__tile[0]] = self.__tiles[self.__index][0]
-                        if self.__index == 1 and ['s',"#470FF4"] in self.__tiles:
-                            self.__tiles.remove(['s',"#470FF4"])
-                            self.__index = 0
-                            self.__click = False
-                        if self.__index == 2 and ['e',"#CE2D4F"] in self.__tiles or (self.__index == 1 and ['s',"#470FF4"] not in self.__tiles):
-                            self.__tiles.remove(['e',"#CE2D4F"])
-                            self.__index = 0
-                            self.__click = False
-
-                if self.__delete == True:
-                    if self.__map[self.__tile[1]][self.__tile[0]] == 's':
-                        self.__tiles.insert(1,['s',"#470FF4"])
-                    if self.__map[self.__tile[1]][self.__tile[0]] == 'e':
-                        self.__tiles.append(['e',"#CE2D4F"])
-                    self.__map[self.__tile[1]][self.__tile[0]] = 'w'
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -101,12 +82,30 @@ class Editor:
                             self.__index = 0
 
             if self.__worldindex == -1:
+                if self.__click:
+                    if self.__map[self.__tile[1]][self.__tile[0]] == 'w' or (self.__map[self.__tile[1]][self.__tile[0]] == 'p' and self.__index != 0):
+                        self.__map[self.__tile[1]][self.__tile[0]] = self.__tiles[self.__index][0]
+                        if self.__index == 1 and ['s',"#470FF4"] in self.__tiles:
+                            self.__tiles.remove(['s',"#470FF4"])
+                            self.__index = 0
+                            self.__click = False
+                        if self.__index == 2 and ['e',"#CE2D4F"] in self.__tiles or (self.__index == 1 and ['s',"#470FF4"] not in self.__tiles):
+                            self.__tiles.remove(['e',"#CE2D4F"])
+                            self.__index = 0
+                            self.__click = False
+
+                if self.__delete:
+                    if self.__map[self.__tile[1]][self.__tile[0]] == 's':
+                        self.__tiles.insert(1,['s',"#470FF4"])
+                    if self.__map[self.__tile[1]][self.__tile[0]] == 'e':
+                        self.__tiles.append(['e',"#CE2D4F"])
+                    self.__map[self.__tile[1]][self.__tile[0]] = 'w'
+
                 self.__tile = (pygame.mouse.get_pos()[0]//70,pygame.mouse.get_pos()[1]//70)
                 self.__win.fill('#242933')
-
                 s = pygame.Surface((70,70)) 
                 s.set_alpha(40)                
-                s.fill(self.__tiles[self.__index][1])     
+                s.fill(self.__tiles[self.__index][1])
 
                 for numi,i in enumerate(self.__map):
                     for numj, j in enumerate(i):
