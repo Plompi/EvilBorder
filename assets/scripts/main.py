@@ -2,25 +2,22 @@ from tilemap import *
 from player import *
 import sys
 import pygame
-import json
 from timer import *
 from gameover import *
+from levelmanager import *
 
 class Main:
     def __init__(self,win):
         self.__win = win
         self.__clock = pygame.time.Clock()
         self.__timer = Timer(self.__win)
-
-        with open('assets/levels/levels.json', 'r') as f:
-            self.__welt = json.load(f)[0]
-
+        self.__LevelManager = LevelManager()
+        self.__welt = self.__LevelManager.LoadLevels()[0]
         self.__map = Tilemap(self.__welt,self.__win)
         self.__tilemap = self.__map.getMap()
         self.__starttile = self.__map.getStartTile()[0]
         self.__playerstart = self.__map.getStartTile()[1]
         self.__player = Player(40,(self.__playerstart[0]*self.__map.getTilesize(),self.__playerstart[1]*self.__map.getTilesize()),self.__map.getTilesize(),self.__win)
-
 
     def playerinput(self):
         while True:
@@ -64,8 +61,7 @@ class Main:
                     if self.__player.getRect().colliderect(j.getRect()):
                         self.__player.setlevel()
                         try:
-                            with open('assets/levels/levels.json', 'r') as f:
-                                self.__welt = json.load(f)[self.__player.getlevel()]
+                            self.__welt = self.__LevelManager.LoadLevels()[self.__player.getlevel()]
                             self.__map = Tilemap(self.__welt,self.__win)
                             self.__tilemap = self.__map.getMap()
 

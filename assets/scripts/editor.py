@@ -1,10 +1,11 @@
 import pygame
 import sys
-import json
 from tilemap import *
+from levelmanager import *
 
 class Editor:
     def __init__(self,win):
+        self.__LevelManager = LevelManager()
         self.__win = win
         self.__clock = pygame.time.Clock()
         self.__tiles = [['p',"#FFFFFF"],['s',"#470FF4"],['e',"#CE2D4F"]]
@@ -60,8 +61,7 @@ class Editor:
                     else:
                         break
                     try:
-                        with open('assets/levels/levels.json', 'r') as f:
-                            self.__welt = json.load(f)[self.__worldindex+self.__direction]
+                        self.__welt = self.__LevelManager.LoadLevels()[self.__worldindex+self.__direction]
 
                         self.__map1 = Tilemap(self.__welt,self.__win)
                         self.__tilemap = self.__map1.getMap()
@@ -69,41 +69,24 @@ class Editor:
                     except:
                         break
 
-                if event.type == pygame.KEYDOWN and event.key == pygame.K_BACKSPACE and self.__worldindex >= -1:
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_BACKSPACE and self.__worldindex > -1:
                     try:
-                        with open("assets/levels/levels.json",'r') as level:
-                            self.__file_data = json.load(level)
-                        self.__file_data.pop(self.__worldindex)
-                        with open("assets/levels/levels.json",'w') as level:
-                            json.dump(self.__file_data, level)
-                    except:
-                        self.__worldindex = -1
-
-                    if len(self.__file_data) < self.__worldindex+1:
-                        self.__worldindex -=1
-
-                    try:
-                        with open('assets/levels/levels.json', 'r') as f:
-                            self.__welt = json.load(f)[self.__worldindex]
-
+                        self.__LevelManager.deleteLevel(self.__worldindex)
+                        if len(self.__LevelManager.LoadLevels()) < self.__worldindex+1:
+                            self.__worldindex -=1
+                        self.__welt = self.__LevelManager.LoadLevels()[self.__worldindex]
                         self.__map1 = Tilemap(self.__welt,self.__win)
                         self.__tilemap = self.__map1.getMap()
                     except:
-                        break
+                        self.__worldindex = -1
 
                 if self.__worldindex == -1:
 
                     if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
-                        with open("assets/levels/levels.json",'r') as level:
-                            self.__file_data = json.load(level)
-                        self.__file_data.append(self.__map)
-                        with open("assets/levels/levels.json",'w') as level:
-                            json.dump(self.__file_data, level)
-                        return
+                        self.__LevelManager.addLevel(self.__map)
 
                     if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                         self.__click = True
-
                     if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
                         self.__click = False
                     if event.type == pygame.MOUSEBUTTONDOWN and event.button == 3:
@@ -144,5 +127,4 @@ class Editor:
                         j.draw()
 
             pygame.display.flip()
-
             self.__clock.tick(120)
