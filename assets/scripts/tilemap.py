@@ -6,7 +6,7 @@ class Tilemap:
         self.__tilemap = []
         self.__size = win.get_height()/len(levelmap)
         self.__colors = {   'w':'#242933',
-                            'p':'#FFFFFF',
+                            'p':'#ECEEF0',
                             's':"#470FF4",
                             'e':"#CE2D4F"}
 

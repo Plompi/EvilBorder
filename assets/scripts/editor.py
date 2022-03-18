@@ -8,7 +8,7 @@ class Editor:
         self.__LevelManager = LevelManager()
         self.__win = win
         self.__clock = pygame.time.Clock()
-        self.__tiles = [['p',"#FFFFFF"],['s',"#470FF4"],['e',"#CE2D4F"]]
+        self.__tiles = [['p',"#ECEEF0"],['s',"#470FF4"],['e',"#CE2D4F"]]
         self.__index = 0
         self.__worldindex = -1
         self.__click = False
@@ -42,7 +42,7 @@ class Editor:
                     else:
                         break
                     try:
-                        self.__welt = self.__LevelManager.LoadLevels()[self.__worldindex+self.__direction]
+                        self.__welt = self.__LevelManager.load_levels()[self.__worldindex+self.__direction]
 
                         self.__map1 = Tilemap(self.__welt,self.__win)
                         self.__tilemap = self.__map1.getMap()
@@ -52,10 +52,10 @@ class Editor:
 
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_BACKSPACE and self.__worldindex > -1:
                     try:
-                        self.__LevelManager.deleteLevel(self.__worldindex)
-                        if len(self.__LevelManager.LoadLevels()) < self.__worldindex+1:
+                        self.__LevelManager.delete_level(self.__worldindex)
+                        if len(self.__LevelManager.load_levels()) < self.__worldindex+1:
                             self.__worldindex -=1
-                        self.__welt = self.__LevelManager.LoadLevels()[self.__worldindex]
+                        self.__welt = self.__LevelManager.load_levels()[self.__worldindex]
                         self.__map1 = Tilemap(self.__welt,self.__win)
                         self.__tilemap = self.__map1.getMap()
                     except:
@@ -64,7 +64,8 @@ class Editor:
                 if self.__worldindex == -1:
 
                     if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
-                        self.__LevelManager.addLevel(self.__map)
+                        self.__LevelManager.add_level(self.__map)
+                        return
 
                     if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                         self.__click = True
@@ -110,7 +111,7 @@ class Editor:
                 for numi,i in enumerate(self.__map):
                     for numj, j in enumerate(i):
                         if j == "p":
-                            pygame.draw.rect(self.__win,(255,255,255),pygame.Rect(numj*70,numi*70,70,70))
+                            pygame.draw.rect(self.__win,"#ECEEF0",pygame.Rect(numj*70,numi*70,70,70))
 
                         if j == "s":
                             pygame.draw.rect(self.__win,"#470FF4",pygame.Rect(numj*70,numi*70,70,70))

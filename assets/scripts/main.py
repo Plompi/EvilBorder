@@ -12,7 +12,7 @@ class Main:
         self.__clock = pygame.time.Clock()
         self.__timer = Timer(self.__win)
         self.__LevelManager = LevelManager()
-        self.__welt = self.__LevelManager.LoadLevels()[0]
+        self.__welt = self.__LevelManager.load_levels()[0]
         self.__map = Tilemap(self.__welt,self.__win)
         self.__tilemap = self.__map.getMap()
         self.__starttile = self.__map.getStartTile()[0]
@@ -61,7 +61,7 @@ class Main:
                     if self.__player.getRect().colliderect(j.getRect()):
                         self.__player.setlevel()
                         try:
-                            self.__welt = self.__LevelManager.LoadLevels()[self.__player.getlevel()]
+                            self.__welt = self.__LevelManager.load_levels()[self.__player.getlevel()]
                             self.__map = Tilemap(self.__welt,self.__win)
                             self.__tilemap = self.__map.getMap()
 

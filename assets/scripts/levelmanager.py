@@ -5,17 +5,17 @@ class LevelManager:
         with open("assets/levels/levels.json",'r') as level:
             self.__file_data = json.load(level)
 
-    def addLevel(self,newlevel):
+    def add_level(self,newlevel):
         self.__file_data.append(newlevel)
-        self.updateLevels
+        self.update_levels()
 
-    def deleteLevel(self,index):
+    def delete_level(self,index):
         self.__file_data.pop(index)
-        self.updateLevels()
+        self.update_levels()
 
-    def updateLevels(self):
+    def update_levels(self):
         with open("assets/levels/levels.json",'w') as level:
             json.dump(self.__file_data, level)
 
-    def LoadLevels(self):
+    def load_levels(self):
         return self.__file_data
